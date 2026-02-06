@@ -499,7 +499,7 @@ public function entries_mapping_page(){
 }  
 public  function main_menu($menus){ 
   // Adding submenu if user has access
-$menu_id='vxcf_leads';  
+$menu_id='vxcf_leads';  $hook='toplevel_page_vxcf_leads';
 if(isset($_GET['tab'])){self::$tab=vxcf_form::post('tab'); } 
 if(empty($GLOBALS['admin_page_hooks'][$menu_id])){
 $unread=$this->data->get_unread_total(); 
@@ -525,7 +525,7 @@ if(empty(self::$tab)){ self::$tab='entries'; }
  vxcf_form::$show_screen_options=true;
  } //var_dump(vxcf_form::$show_screen_options); die();       
 if( vxcf_form::$show_screen_options ){ 
-if( !isset($_GET['id']) ){
+if( !isset($_GET['id']) ){ 
 add_filter( 'manage_toplevel_page_'.vxcf_form::$id.'_columns', array($this,'screen_cols') );
   //add form fields , if form options do not exist
 add_filter( 'get_user_option_managetoplevel_page_'.vxcf_form::$id.'columnshidden', array($this,'hide_cols') );
