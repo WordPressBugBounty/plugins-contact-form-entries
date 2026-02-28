@@ -61,7 +61,7 @@ public function remove_data(){
   $this->deactivate_plugin();
 }
 public function deactivate_plugin(){
-        $slug=$this->get_slug();
+        $slug=vxcf_form::get_slug();
           //deactivate 
   deactivate_plugins($slug); 
     update_option('recently_activated', array($slug => time()) + (array)get_option('recently_activated'));

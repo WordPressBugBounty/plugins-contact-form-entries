@@ -462,20 +462,18 @@ if(isset($field['type']) && $field['type'] == 'file'){
     $files_arr=array();
     if(!empty($field_label)){
         if(!is_array($field_label)){
-     $files_arr=array($field_label);   
+   if(!empty($field_label)){  $files_arr=array($field_label); }   
     }else{
         $files_arr=$field_label;
     } 
     }
-
     if(!empty($files_arr)){
     $value='';
 foreach($files_arr as $k=>$val){
 $value.=vxcf_form::file_link($val);
 }
 $field_label=$value;
-
-    }
+    } 
 }else{
 if(is_array($field_label)){
   $field_label=implode(', ',$field_label);  

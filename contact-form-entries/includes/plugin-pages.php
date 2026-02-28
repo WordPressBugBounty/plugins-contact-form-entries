@@ -1180,7 +1180,11 @@ if($type == 'file' ){
 //delete files
 $files=array();
 if(!empty($detail[$name]['value']) ){
-        $db_files= maybe_unserialize($detail[$name]['value']);
+    $db_files= maybe_unserialize($detail[$name]['value']);
+     if(is_serialized($db_files)){
+           $db_files=unserialize($db_files, array('allowed_classes' => false));
+         }
+        
         if(!empty($db_files) && !is_array($db_files)){
             $db_files=array($db_files);
         }
@@ -1240,7 +1244,7 @@ if($type == 'textarea'){
                
      if(isset($detail[$name]['value'])){
          if(is_array($value)){
-          $value=serialize($value);   
+          $value=json_encode($value);   
          }
 //old serialized val is not rqual to new serialized value
          if($detail[$name]['value'] !=$value){   
