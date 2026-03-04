@@ -2,7 +2,7 @@
 /**
 * Plugin Name: Contact Form Entries
 * Description: Save form submissions to the database from <a href="https://wordpress.org/plugins/contact-form-7/">Contact Form 7</a>, <a href="https://wordpress.org/plugins/ninja-forms/">Ninja Forms</a>, <a href="https://elementor.com/widgets/form-widget/">Elementor Forms</a> and <a href="https://wordpress.org/plugins/wpforms-lite/">WP Forms</a>.
-* Version: 1.4.7
+* Version: 1.4.8
 * Requires at least: 3.8
 * Author URI: https://www.crmperks.com
 * Plugin URI: https://www.crmperks.com/plugins/contact-form-plugins/crm-perks-forms/
@@ -25,7 +25,7 @@ class vxcf_form {
   public static $type = "vxcf_form";
   public static $path = ''; 
 
-  public static  $version = '1.4.7';
+  public static  $version = '1.4.8';
   public static $upload_folder = 'crm_perks_uploads';
   public static $db_version='';  
   public static $base_url='';  
@@ -3014,7 +3014,7 @@ $extra_keys=array('vxbrowser'=>'browser','vxurl'=>'url','vxscreen'=>'screen','vx
   foreach($fields as $k=>$field){
       $val=''; 
   if(isset($field['name']) && isset($row[$field['name'].'_field'])){
-      $val=maybe_unserialize($row[$field['name'].'_field']); 
+      $val=vxcf_form::maybe_unserialize($row[$field['name'].'_field']); 
   }
   if(isset($extra_keys[$k]) && isset($lead_row[$extra_keys[$k]])){
       if($k == 'vxbrowser'){
