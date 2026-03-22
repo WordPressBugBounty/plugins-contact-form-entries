@@ -3,8 +3,8 @@ Contributors: crmperks, sbazzi
 Tags: contact form 7, contact form 7 database, Elementor forms database, contact form entries, wpforms database
 Requires at least: 3.8
 Tested up to: 6.9
-Stable tag: 1.4.9
-Version: 1.4.9
+Stable tag: 1.5.0
+Version: 1.5.0
 Requires PHP: 5.3
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
@@ -167,6 +167,9 @@ Contact form 7 entries plugin allows you to save contact form 7 entries to local
 
 
 == Changelog ==
+
+= 1.5.0 =
+* fixed "Missing Authorization to Authenticated wp users" issue.
 
 = 1.4.9 =
 * fixed "Missing Authorization to Authenticated wp users" issue.

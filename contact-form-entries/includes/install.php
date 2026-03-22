@@ -27,6 +27,7 @@ $roles=$this->get_roles();
 foreach($roles as $role){
   $wp_roles->add_cap( 'administrator', $role );
 }
+$wp_roles->add_cap( 'editor', vxcf_form::$id."_read_entries" );
 $wp_roles->add_cap( 'administrator', 'vx_crmperks_view_plugins' );
 $wp_roles->add_cap( 'administrator', 'vx_crmperks_view_addons' );
 $wp_roles->add_cap( 'administrator', 'vx_crmperks_edit_addons' );
