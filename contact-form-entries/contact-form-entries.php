@@ -2,7 +2,7 @@
 /**
 * Plugin Name: Contact Form Entries
 * Description: Save form submissions to the database from <a href="https://wordpress.org/plugins/contact-form-7/">Contact Form 7</a>, <a href="https://wordpress.org/plugins/ninja-forms/">Ninja Forms</a>, <a href="https://elementor.com/widgets/form-widget/">Elementor Forms</a> and <a href="https://wordpress.org/plugins/wpforms-lite/">WP Forms</a>.
-* Version: 1.5.0
+* Version: 1.5.1
 * Requires at least: 3.8
 * Author URI: https://www.crmperks.com
 * Plugin URI: https://www.crmperks.com/plugins/contact-form-plugins/crm-perks-forms/
@@ -25,7 +25,7 @@ class vxcf_form {
   public static $type = "vxcf_form";
   public static $path = ''; 
 
-  public static  $version = '1.5.0';
+  public static  $version = '1.5.1';
   public static $upload_folder = 'crm_perks_uploads';
   public static $db_version='';  
   public static $base_url='';  
@@ -202,8 +202,13 @@ if(empty(self::$path)){   self::$path=$this->get_base_path(); }
   update_option(vxcf_form::$type."_version", self::$version);
 }
 public function entries_shortcode($atts){
-    if(is_preview() && !current_user_can(vxcf_form::$id.'_read_entries')){
-     return;   
+     $post = get_post();
+    if ( ! $post ) {
+        return '';
+    }
+    // Check if the POST AUTHOR has the _read_entries capability
+    if ( ! user_can( $post->post_author, vxcf_form::$id . '_read_entries' ) ) { //is_preview()
+        return '';
     }
   $form_id='';
   if(!empty($atts['form-id'])){
@@ -611,31 +616,37 @@ $this->create_entry($lead,$form_arr,'wp','',$track);
 //var_dump($fields); die();
 }
 public function create_entry_el( $record){
+ /*   ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);*/
 
-    $data=$record->get_formatted_data();
+   // $data=$record->get_formatted_data();
     $form_id_p=$this->post('form_id');
     $post_id_p=$this->post('post_id');
     
+   // $d=$record->get_form_settings( 'form_fields' ); //form_name
+    $data = $record->get( 'fields' );
+   // $raw_files = $record->get( 'files' );
     $form_id=$form_id_p.'_'.$post_id_p;
     $track=$this->track_form_entry('el',$form_id);
     $fields=self::get_form_fields('el_'.$form_id);
 $upload_files=$lead=array();
-if(!empty($fields)){
-    foreach($fields as $v){ 
-    if(isset($data[$v['label']])){     
-$val=$data[$v['label']];
-if(in_array($v['type'],array('upload','file'))){
-    if($val!='attached'){
-  $upload_files[$v['id']]=$val;
-    }  
+if(!empty($data)){
+    foreach($data as $v){ 
+    if(isset($v['type'])){ 
+    if(in_array($v['type'],array('html','step','recaptcha','recaptcha_v3','honeypot'))){ 
+      continue;  
+    }    
+$val=$v['raw_value'];
+if(in_array($v['type'],array('upload','file'))){ 
+  $upload_files[$v['id']]=$val;  
 }else{
 
  if(in_array($v['type'],array('checkbox','multiselect'))){
-  $val=array_map('trim',explode(',',$val));     
+ // $val=array_map('trim',explode(',',$val));     //need it for value not for raw value
 }
 $lead[$v['id']]=$val;
-}    } }
-
+}    } } //var_dump($upload_files); die();
 if($track ){ //&& !empty(self::$is_pr)
   $upload_files=$this->copy_files($upload_files); 
 }  
