@@ -287,7 +287,7 @@ margin-left: 8px;
      <div style="float: right;">
 <form id="vx_form" class="crm_form" method="get"><div>
     <input type="hidden" name="page" value="<?php echo esc_html(vxcf_form::post('page')) ?>" />
-  <input type="hidden" name="form_id" value="<?php echo esc_html($form_id) ?>" />
+  <input type="hidden" name="form_id" value="<?php echo esc_attr($form_id) ?>" />
   
       <input type="hidden" name="status" value="<?php echo esc_html(vxcf_form::post('status')) ?>" />
   <input type="hidden" name="tab" value="<?php echo esc_html($tab); ?>" />

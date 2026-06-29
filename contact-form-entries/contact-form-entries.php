@@ -2,7 +2,7 @@
 /**
 * Plugin Name: Contact Form Entries
 * Description: Save form submissions to the database from <a href="https://wordpress.org/plugins/contact-form-7/">Contact Form 7</a>, <a href="https://wordpress.org/plugins/ninja-forms/">Ninja Forms</a>, <a href="https://elementor.com/widgets/form-widget/">Elementor Forms</a> and <a href="https://wordpress.org/plugins/wpforms-lite/">WP Forms</a>.
-* Version: 1.5.2
+* Version: 1.5.3
 * Requires at least: 3.8
 * Author URI: https://www.crmperks.com
 * Plugin URI: https://www.crmperks.com/plugins/contact-form-plugins/crm-perks-forms/
@@ -25,7 +25,7 @@ class vxcf_form {
   public static $type = "vxcf_form";
   public static $path = ''; 
 
-  public static  $version = '1.5.2';
+  public static  $version = '1.5.3';
   public static $upload_folder = 'crm_perks_uploads';
   public static $db_version='';  
   public static $base_url='';  
@@ -2784,7 +2784,7 @@ public static function set_form_fields($form_id=''){
         if(empty($form_id)){
          $form_id=vxcf_form::post('form_id');   
         }
-  self::$form_id=esc_sql($form_id);   
+  self::$form_id=esc_attr($form_id);   
 if(empty(self::$form_id) && !empty(self::$forms)){
       $form_key=key($forms);
       if(isset($forms[$form_key]['forms']) && is_array($forms[$form_key]['forms'])){
