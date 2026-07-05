@@ -1202,7 +1202,6 @@ if(!isset($_POST['files_'.$name][$k])){
           }
           }
 }
-die();
 $not_allowed_files = array( 'js', 'jse', 'jar', 'php', 'php3', 'php4', 'php5', 'phtml', 'svg', 'swf', 'exe', 'html', 'htm', 'shtml', 'xhtml', 'xml', 'css', 'asp', 'aspx', 'jsp', 'sql', 'hta', 'dll', 'bat', 'com', 'sh', 'bash', 'py', 'pl', 'dfxp' );
 if(!empty($_FILES)){
               if(isset($_FILES[$field['name']]['name']) && is_array($_FILES[$field['name']]['name'])){

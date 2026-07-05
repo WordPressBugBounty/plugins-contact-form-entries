@@ -2,7 +2,7 @@
 /**
 * Plugin Name: Contact Form Entries
 * Description: Save form submissions to the database from <a href="https://wordpress.org/plugins/contact-form-7/">Contact Form 7</a>, <a href="https://wordpress.org/plugins/ninja-forms/">Ninja Forms</a>, <a href="https://elementor.com/widgets/form-widget/">Elementor Forms</a> and <a href="https://wordpress.org/plugins/wpforms-lite/">WP Forms</a>.
-* Version: 1.5.3
+* Version: 1.5.4
 * Requires at least: 3.8
 * Author URI: https://www.crmperks.com
 * Plugin URI: https://www.crmperks.com/plugins/contact-form-plugins/crm-perks-forms/
@@ -25,7 +25,7 @@ class vxcf_form {
   public static $type = "vxcf_form";
   public static $path = ''; 
 
-  public static  $version = '1.5.3';
+  public static  $version = '1.5.4';
   public static $upload_folder = 'crm_perks_uploads';
   public static $db_version='';  
   public static $base_url='';  
@@ -703,10 +703,10 @@ $track=$this->track_form_entry('cf',$form_id);
 
 $submission = WPCF7_Submission::get_instance();      
 $uploaded_files = $submission->uploaded_files();
-
 if($track){
 $uploaded_files=$this->copy_files($uploaded_files);
 }
+//var_dump($uploaded_files);
 $form_title=$form->title();
 $tags=vxcf_form::get_form_fields('cf_'.$form_id); 
 $post_data=$submission->get_posted_data();
@@ -737,13 +737,13 @@ if(is_array($post_data)){
    }*/
 //if( !empty($val) && is_array($val) && isset($v['type_']) && $v['type_'] == 'mfilea'){ //escape wpcf7-files/testt'"><img src=x onerror=alert(1).jpg
 if( $field_type == 'file'){ 
-if(isset($uploaded_files[$name])){
-  $val=$uploaded_files[$name];
+if(isset($uploaded_files[$k])){
+  $val=$uploaded_files[$k];
    }
    if(is_array($val)){
        $temp_val=array();
        foreach($val as $kk=>$vv){
-     $temp_val[$kk]=sanitize_url($vv);   
+     $temp_val[$kk]=$vv;   
     }
 $val=$temp_val;
    }
