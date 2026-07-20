@@ -511,7 +511,7 @@ return  $wpdb->query($sql);
   public function lead_actions($action,$leads){
         global $wpdb;
     $leads_table = $this->get_crm_table_name();
-    $ids=implode(',',$leads);
+    $ids=implode(',',array_map('intval',$leads));
     $key=key($action);
     $val=$action[$key];
   $sql="update {$leads_table} l set l.{$key}='{$val}'  where l.id in({$ids})"; //die();
