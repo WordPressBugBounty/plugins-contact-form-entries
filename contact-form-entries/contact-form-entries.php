@@ -2,7 +2,7 @@
 /**
 * Plugin Name: Contact Form Entries
 * Description: Save form submissions to the database from <a href="https://wordpress.org/plugins/contact-form-7/">Contact Form 7</a>, <a href="https://wordpress.org/plugins/ninja-forms/">Ninja Forms</a>, <a href="https://elementor.com/widgets/form-widget/">Elementor Forms</a> and <a href="https://wordpress.org/plugins/wpforms-lite/">WP Forms</a>.
-* Version: 1.5.5
+* Version: 1.5.6
 * Requires at least: 3.8
 * Author URI: https://www.crmperks.com
 * Plugin URI: https://www.crmperks.com/plugins/contact-form-plugins/crm-perks-forms/
@@ -25,7 +25,7 @@ class vxcf_form {
   public static $type = "vxcf_form";
   public static $path = ''; 
 
-  public static  $version = '1.5.5';
+  public static  $version = '1.5.6';
   public static $upload_folder = 'crm_perks_uploads';
   public static $db_version='';  
   public static $base_url='';  
@@ -799,7 +799,6 @@ public function create_entry_na($data){
 if(empty($data['form_id'])){
     return;
 }
-
 $form_title=$data['settings']['title'];
 $lead=$upload_files=array();
 if(!empty($data['fields'])){
@@ -807,7 +806,18 @@ if(!empty($data['fields'])){
       $field_id=$v['id'];
      if(!empty($v['value'])){
          if($v['type'] == 'file_upload'){
-        $upload_files[$field_id]=$v['value'];     
+             $files=array();
+             if(!empty($v['files'])){
+              foreach($v['files'] as $file){ 
+                  if(!empty($file['tmp_name'])){
+                      $f_path=realpath($file['data']['file_path']);
+                      if(strpos($f_path,'ninja-forms') !== false){
+                      $files[]=$f_path;    
+                      }
+                  }
+              }   
+             }
+        $upload_files[$field_id]=$files;     
          }else{
          $lead[$field_id]=$v['value']; 
          }
@@ -1373,8 +1383,11 @@ $folder=$upload['folder'];
                   if(strpos($file,$base_url) === 0){
                   $file=str_replace($base_url,trim(ABSPATH,'/'),$file);     
                   } 
-                  
-                $file_name_arr=explode('/',$file);
+                  $file_sep='/';
+                  if(strpos($file,'\\') !== false){
+                   $file_sep='\\';   
+                  }
+                $file_name_arr=explode($file_sep,$file);
                $file_name=$file_name_arr[count($file_name_arr)-1]; 
                $file_name=sanitize_file_name($file_name);
                $file_name = wp_unique_filename( $upload_path, $file_name );

@@ -292,6 +292,7 @@ function toggle(){
 </div>
 <div class="vx_contents">
   <?php
+  $upload=vxcf_form::get_upload_dir();
        foreach($leads as $id=>$lead){   
      $notes=$detail=array();
      if(isset($lead['lead'])){
@@ -316,6 +317,28 @@ function toggle(){
           $value=vxcf_form::maybe_unserialize($lead_field['value']);
 if(!empty($field['values'])){
  $value=vxcf_form::check_option_value($field['values'],$value);   
+}
+if(isset($field['type']) && $field['type'] == 'file'){
+    $files_arr=array();
+    if(!empty($value)){
+        if(!is_array($value)){
+   if(!empty($value)){  $files_arr=array($value); }   
+    }else{
+        $files_arr=$value;
+    } 
+    }
+    if(!empty($files_arr)){
+    $value='';
+foreach($files_arr as $k=>$val){
+            if(filter_var($val,FILTER_VALIDATE_URL) === false){  
+  $value.=esc_url($upload['url'].$val);     
+    }
+}
+$field_label=$value;
+    }
+  if(is_array($field_label)){
+  $field_label=implode(', ',$field_label);  
+}   
 }
       }
 

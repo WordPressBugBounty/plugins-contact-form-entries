@@ -243,7 +243,7 @@ $fields=vxcf_form::$form_fields;
 $fields=vxcf_form::get_form_fields($form_id); 
 }
 
-//var_dump($leads,$fields);die();                              
+//var_dump($leads);die();                              
 include_once(vxcf_form::$path . "templates/print.php");
 exit;  
 } 
